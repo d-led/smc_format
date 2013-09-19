@@ -1,11 +1,11 @@
-#ifndef FSM_Format_09_19_2013_22_02_19_H
-#define FSM_Format_09_19_2013_22_02_19_H
+#ifndef FSM_Format_09_19_2013_22_32_09_H
+#define FSM_Format_09_19_2013_22_32_09_H
 //----------------------------------------------
 // format.h
 // FSM:       Format
 // Context:   FormatContext
 // Version:   
-// Generated: Donnerstag 09/19/2013 at 22:02:19 MESZ
+// Generated: Donnerstag 09/19/2013 at 22:32:09 MESZ
 //
 
 
@@ -38,9 +38,9 @@ class FormatReadingKeyState : public FormatState
   public: 
     virtual const char* StateName() const
         { return "ReadingKey"; }
+    virtual void ReadEqualsSign( Format& );
     virtual void ReadComma( Format& );
     virtual void ReadLeftBrace( Format& );
-    virtual void ReadEqualsSign( Format& );
     virtual void ReadRightBrace( Format& );
 };
 //----------------------------------------------
@@ -61,9 +61,9 @@ class FormatReadingPlaceholderState : public FormatState
   public: 
     virtual const char* StateName() const
         { return "ReadingPlaceholder"; }
+    virtual void ReadLeftBrace( Format& );
     virtual void ReadRightBrace( Format& );
     virtual void ReadComma( Format& );
-    virtual void ReadLeftBrace( Format& );
 };
 //----------------------------------------------
 // State: ReadingValue
@@ -73,9 +73,9 @@ class FormatReadingValueState : public FormatState
   public: 
     virtual const char* StateName() const
         { return "ReadingValue"; }
-    virtual void ReadComma( Format& );
     virtual void ReadRightBrace( Format& );
     virtual void ReadLeftBrace( Format& );
+    virtual void ReadComma( Format& );
 };
 //----------------------------------------------
 // Format: The Finite State Machine class
@@ -108,4 +108,4 @@ class Format: public FormatContext
     FormatState* itsState;
 };
 
-#endif /* FSM_Format_09_19_2013_22_02_19_H */
+#endif /* FSM_Format_09_19_2013_22_32_09_H */

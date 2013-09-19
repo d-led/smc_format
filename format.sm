@@ -11,9 +11,9 @@ pragma Header format_context.h
 
     ReadingPlaceholder
     {
-        ReadRightBrace  General             RightBrace
+        ReadRightBrace  General             { ParsePlaceholder RightBrace }
         ReadLeftBrace   ReadingPlaceholder  LeftBrace
-        ReadComma       ReadingKey          StartKey
+        ReadComma       ReadingKey          { ParsePlaceholder StartKey }
     }
 
     ReadingKey
@@ -26,7 +26,7 @@ pragma Header format_context.h
 
     ReadingValue
     {
-        ReadRightBrace  General             RightBrace
+        ReadRightBrace  General             { AddValue RightBrace }
         ReadLeftBrace   ReadingPlaceholder  LeftBrace
         ReadComma       ReadingKey          AddValue
     }
