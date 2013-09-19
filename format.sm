@@ -6,12 +6,20 @@ pragma Header format_context.h
 {
     General
     {
-        ReadLeftBrace  ReadingPlaceholder  LeftBrace
+        ReadLeftBrace   ReadingPlaceholder  LeftBrace
     }
 
     ReadingPlaceholder
     {
-        ReadRightBrace  General RightBrace
-        ReadLeftBrace ReadingPlaceholder LeftBrace 
+        ReadRightBrace  General             RightBrace
+        ReadLeftBrace   ReadingPlaceholder  LeftBrace
+        ReadComma       ReadingKey          StartKey
+    }
+
+    ReadingKey
+    {
+        ReadRightBrace  General             RightBrace
+        ReadLeftBrace   ReadingPlaceholder  LeftBrace
+        ReadComma       ReadingKey          AddKeyAndContinue
     }
 }

@@ -3,7 +3,7 @@
 // FSM:       Format
 // Context:   FormatContext
 // Version:   
-// Generated: Donnerstag 09/19/2013 at 21:36:00 MESZ
+// Generated: Donnerstag 09/19/2013 at 21:48:54 MESZ
 //
 
 
@@ -15,6 +15,7 @@ static char _versID[]  = "";
 // Definitions of static state objects
 
 //----------------------------------------------
+FormatReadingKeyState Format::ReadingKey;
 FormatGeneralState Format::General;
 FormatReadingPlaceholderState Format::ReadingPlaceholder;
 
@@ -29,9 +30,52 @@ void FormatState::ReadRightBrace(Format& s)
 void FormatState::ReadLeftBrace(Format& s)
   { s.FSMError("ReadLeftBrace", s.GetState().StateName()); }
 
+void FormatState::ReadComma(Format& s)
+  { s.FSMError("ReadComma", s.GetState().StateName()); }
+
 //----------------------------------------------
 // The States and their Transitions
 //----------------------------------------------
+
+//----------------------------------------------
+// ReadingKey Actions and Transitions
+//----------------------------------------------
+
+// Starting State: ReadingKey
+// Event:          ReadComma
+//
+void FormatReadingKeyState::ReadComma( Format& s )
+{
+
+    s.AddKeyAndContinue();
+
+    // Change the state
+    s.SetState(Format::ReadingKey);
+}
+
+// Starting State: ReadingKey
+// Event:          ReadLeftBrace
+//
+void FormatReadingKeyState::ReadLeftBrace( Format& s )
+{
+
+    s.LeftBrace();
+
+    // Change the state
+    s.SetState(Format::ReadingPlaceholder);
+}
+
+// Starting State: ReadingKey
+// Event:          ReadRightBrace
+//
+void FormatReadingKeyState::ReadRightBrace( Format& s )
+{
+
+    s.RightBrace();
+
+    // Change the state
+    s.SetState(Format::General);
+}
 
 //----------------------------------------------
 // General Actions and Transitions
@@ -75,6 +119,18 @@ void FormatReadingPlaceholderState::ReadRightBrace( Format& s )
 
     // Change the state
     s.SetState(Format::General);
+}
+
+// Starting State: ReadingPlaceholder
+// Event:          ReadComma
+//
+void FormatReadingPlaceholderState::ReadComma( Format& s )
+{
+
+    s.StartKey();
+
+    // Change the state
+    s.SetState(Format::ReadingKey);
 }
 
 //----------------------------------------------

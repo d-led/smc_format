@@ -9,6 +9,7 @@ int main() {
 		switch (c) {
 				case '{': f.ReadLeftBrace(); break;
 				case '}': f.ReadRightBrace(); break;
+				case ',': f.ReadComma(); break;
 				default : f.Continue(); break;
 		}
 		std::cout<<c;

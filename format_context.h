@@ -10,6 +10,7 @@ class FormatContext
 	std::string s;
 	int pos;
 	int last_left_brace;
+	int last_key_start;
 	static const int START_POS=-1;
 	TPlaceholders placeholders;
 
@@ -27,7 +28,7 @@ public:
 
 	void SetString(std::string const& _) { 
 		s=_; 
-		last_left_brace=pos=START_POS;
+		last_key_start=last_left_brace=pos=START_POS;
 		rlutil::setColor(rlutil::WHITE);
 	}
 
@@ -51,6 +52,16 @@ public:
 		rlutil::setColor(rlutil::BLUE);
 	}
 
+	void StartKey() {
+		last_key_start=pos;
+		rlutil::setColor(rlutil::YELLOW);
+	}
+
+	void AddKeyAndContinue() {
+		last_key_start=pos;
+		rlutil::setColor(rlutil::WHITE);
+	}
+
 	void RightBrace() {
 		if (last_left_brace!=START_POS
 			&& (pos-last_left_brace) > 1) {
@@ -59,11 +70,14 @@ public:
 				placeholders.push_back(start);
 		}
 		last_left_brace=START_POS;
+		last_key_start=START_POS;
 		rlutil::setColor(rlutil::LIGHTBLUE);
 	}
 
 	void Continue() {
-		if (last_left_brace>=0)
+		if (last_key_start>=0)
+			rlutil::setColor(rlutil::YELLOW);
+		else if (last_left_brace>=0)
 			rlutil::setColor(rlutil::GREEN);
 		else
 			rlutil::setColor(rlutil::WHITE);
