@@ -1,0 +1,17 @@
+Context FormatContext
+FSMName Format
+Initial General
+
+pragma Header format_context.h
+{
+    General
+    {
+        ReadLeftBrace  ReadingPlaceholder  LeftBrace
+    }
+
+    ReadingPlaceholder
+    {
+        ReadRightBrace  General RightBrace
+        ReadLeftBrace ReadingPlaceholder LeftBrace 
+    }
+}
