@@ -3,7 +3,7 @@
 // FSM:       Format
 // Context:   FormatContext
 // Version:   
-// Generated: Donnerstag 09/19/2013 at 21:48:54 MESZ
+// Generated: Donnerstag 09/19/2013 at 22:02:19 MESZ
 //
 
 
@@ -18,11 +18,15 @@ static char _versID[]  = "";
 FormatReadingKeyState Format::ReadingKey;
 FormatGeneralState Format::General;
 FormatReadingPlaceholderState Format::ReadingPlaceholder;
+FormatReadingValueState Format::ReadingValue;
 
 //----------------------------------------------
 // Default Event Functions
 
 //----------------------------------------------
+
+void FormatState::ReadEqualsSign(Format& s)
+  { s.FSMError("ReadEqualsSign", s.GetState().StateName()); }
 
 void FormatState::ReadRightBrace(Format& s)
   { s.FSMError("ReadRightBrace", s.GetState().StateName()); }
@@ -66,6 +70,18 @@ void FormatReadingKeyState::ReadLeftBrace( Format& s )
 }
 
 // Starting State: ReadingKey
+// Event:          ReadEqualsSign
+//
+void FormatReadingKeyState::ReadEqualsSign( Format& s )
+{
+
+    s.AddKeyAndStartAddingValue();
+
+    // Change the state
+    s.SetState(Format::ReadingValue);
+}
+
+// Starting State: ReadingKey
 // Event:          ReadRightBrace
 //
 void FormatReadingKeyState::ReadRightBrace( Format& s )
@@ -98,18 +114,6 @@ void FormatGeneralState::ReadLeftBrace( Format& s )
 //----------------------------------------------
 
 // Starting State: ReadingPlaceholder
-// Event:          ReadLeftBrace
-//
-void FormatReadingPlaceholderState::ReadLeftBrace( Format& s )
-{
-
-    s.LeftBrace();
-
-    // Change the state
-    s.SetState(Format::ReadingPlaceholder);
-}
-
-// Starting State: ReadingPlaceholder
 // Event:          ReadRightBrace
 //
 void FormatReadingPlaceholderState::ReadRightBrace( Format& s )
@@ -131,6 +135,58 @@ void FormatReadingPlaceholderState::ReadComma( Format& s )
 
     // Change the state
     s.SetState(Format::ReadingKey);
+}
+
+// Starting State: ReadingPlaceholder
+// Event:          ReadLeftBrace
+//
+void FormatReadingPlaceholderState::ReadLeftBrace( Format& s )
+{
+
+    s.LeftBrace();
+
+    // Change the state
+    s.SetState(Format::ReadingPlaceholder);
+}
+
+//----------------------------------------------
+// ReadingValue Actions and Transitions
+//----------------------------------------------
+
+// Starting State: ReadingValue
+// Event:          ReadComma
+//
+void FormatReadingValueState::ReadComma( Format& s )
+{
+
+    s.AddValue();
+
+    // Change the state
+    s.SetState(Format::ReadingKey);
+}
+
+// Starting State: ReadingValue
+// Event:          ReadRightBrace
+//
+void FormatReadingValueState::ReadRightBrace( Format& s )
+{
+
+    s.RightBrace();
+
+    // Change the state
+    s.SetState(Format::General);
+}
+
+// Starting State: ReadingValue
+// Event:          ReadLeftBrace
+//
+void FormatReadingValueState::ReadLeftBrace( Format& s )
+{
+
+    s.LeftBrace();
+
+    // Change the state
+    s.SetState(Format::ReadingPlaceholder);
 }
 
 //----------------------------------------------

@@ -1,11 +1,11 @@
-#ifndef FSM_Format_09_19_2013_21_48_54_H
-#define FSM_Format_09_19_2013_21_48_54_H
+#ifndef FSM_Format_09_19_2013_22_02_19_H
+#define FSM_Format_09_19_2013_22_02_19_H
 //----------------------------------------------
 // format.h
 // FSM:       Format
 // Context:   FormatContext
 // Version:   
-// Generated: Donnerstag 09/19/2013 at 21:48:54 MESZ
+// Generated: Donnerstag 09/19/2013 at 22:02:19 MESZ
 //
 
 
@@ -24,6 +24,7 @@ class FormatState
 {
   public: 
     virtual const char* StateName() const = 0;
+    virtual void ReadEqualsSign( Format& );
     virtual void ReadRightBrace( Format& );
     virtual void ReadLeftBrace( Format& );
     virtual void ReadComma( Format& );
@@ -39,6 +40,7 @@ class FormatReadingKeyState : public FormatState
         { return "ReadingKey"; }
     virtual void ReadComma( Format& );
     virtual void ReadLeftBrace( Format& );
+    virtual void ReadEqualsSign( Format& );
     virtual void ReadRightBrace( Format& );
 };
 //----------------------------------------------
@@ -59,9 +61,21 @@ class FormatReadingPlaceholderState : public FormatState
   public: 
     virtual const char* StateName() const
         { return "ReadingPlaceholder"; }
-    virtual void ReadLeftBrace( Format& );
     virtual void ReadRightBrace( Format& );
     virtual void ReadComma( Format& );
+    virtual void ReadLeftBrace( Format& );
+};
+//----------------------------------------------
+// State: ReadingValue
+//----------------------------------------------
+class FormatReadingValueState : public FormatState
+{
+  public: 
+    virtual const char* StateName() const
+        { return "ReadingValue"; }
+    virtual void ReadComma( Format& );
+    virtual void ReadRightBrace( Format& );
+    virtual void ReadLeftBrace( Format& );
 };
 //----------------------------------------------
 // Format: The Finite State Machine class
@@ -73,10 +87,12 @@ class Format: public FormatContext
     static FormatReadingKeyState ReadingKey;
     static FormatGeneralState General;
     static FormatReadingPlaceholderState ReadingPlaceholder;
+    static FormatReadingValueState ReadingValue;
 
     Format(); // default Constructor
 
     // Event functions
+    virtual void ReadEqualsSign() { itsState->ReadEqualsSign( *this ); }
     virtual void ReadRightBrace() { itsState->ReadRightBrace( *this ); }
     virtual void ReadLeftBrace() { itsState->ReadLeftBrace( *this ); }
     virtual void ReadComma() { itsState->ReadComma( *this ); }
@@ -92,4 +108,4 @@ class Format: public FormatContext
     FormatState* itsState;
 };
 
-#endif /* FSM_Format_09_19_2013_21_48_54_H */
+#endif /* FSM_Format_09_19_2013_22_02_19_H */

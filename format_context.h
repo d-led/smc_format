@@ -11,6 +11,7 @@ class FormatContext
 	int pos;
 	int last_left_brace;
 	int last_key_start;
+	int last_value_start;
 	static const int START_POS=-1;
 	TPlaceholders placeholders;
 
@@ -28,7 +29,7 @@ public:
 
 	void SetString(std::string const& _) { 
 		s=_; 
-		last_key_start=last_left_brace=pos=START_POS;
+		last_value_start=last_key_start=last_left_brace=pos=START_POS;
 		rlutil::setColor(rlutil::WHITE);
 	}
 
@@ -49,17 +50,25 @@ public:
 
 	void LeftBrace() {
 		last_left_brace=pos;
+		last_key_start=last_value_start=START_POS;
 		rlutil::setColor(rlutil::BLUE);
 	}
 
 	void StartKey() {
 		last_key_start=pos;
+		last_value_start=START_POS;
 		rlutil::setColor(rlutil::YELLOW);
 	}
 
 	void AddKeyAndContinue() {
 		last_key_start=pos;
 		rlutil::setColor(rlutil::WHITE);
+	}
+
+	void AddKeyAndStartAddingValue() {
+		last_key_start=START_POS;
+		last_value_start=pos;
+		rlutil::setColor(rlutil::MAGENTA);
 	}
 
 	void RightBrace() {
@@ -71,11 +80,19 @@ public:
 		}
 		last_left_brace=START_POS;
 		last_key_start=START_POS;
+		last_value_start=START_POS;
 		rlutil::setColor(rlutil::LIGHTBLUE);
 	}
 
+	void AddValue() {
+		last_key_start=pos;
+		last_value_start=START_POS;
+	}
+
 	void Continue() {
-		if (last_key_start>=0)
+		if (last_value_start>=0)
+			rlutil::setColor(rlutil::LIGHTRED);
+		else if (last_key_start>=0)
 			rlutil::setColor(rlutil::YELLOW);
 		else if (last_left_brace>=0)
 			rlutil::setColor(rlutil::GREEN);
