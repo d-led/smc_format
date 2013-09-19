@@ -1,6 +1,9 @@
 smc_format
 ==========
 
+This is preliminary work for a rewrite of the [fakeformat](https://github.com/d-led/fakeformat) single-header C++ pragmatic string formatting library.
+
+A blog post to follow...
 
 state machine
 -------------
