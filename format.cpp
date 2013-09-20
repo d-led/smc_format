@@ -1,3 +1,5 @@
+///BEGIN FORMAT CPP///
+
 //----------------------------------------------
 // format.cpp
 // FSM:       FormatParser
@@ -209,3 +211,4 @@ FormatParser::FormatParser() : itsState(&General)
 const char* FormatParser::GetVersion() const
 { return _versID; }
 
+///END FORMAT CPP///

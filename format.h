@@ -1,3 +1,5 @@
+///BEGIN FORMAT H///
+
 #ifndef FSM_FormatParser_09_20_2013_20_00_04_H
 #define FSM_FormatParser_09_20_2013_20_00_04_H
 //----------------------------------------------
@@ -109,3 +111,5 @@ class FormatParser: public FormatContext
 };
 
 #endif /* FSM_FormatParser_09_20_2013_20_00_04_H */
+
+///END FORMAT H///

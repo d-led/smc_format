@@ -9,6 +9,8 @@
 #include "rlutil.h"
 #endif
 
+///BEGIN FORMAT CONTEXT///
+
 typedef std::map<std::string,std::string> TKeyValueMap;
 
 struct TConfig {
@@ -198,3 +200,5 @@ public:
 #endif
 
 };
+
+///END FORMAT CONTEXT///
