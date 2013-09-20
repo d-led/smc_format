@@ -6,18 +6,19 @@
 #include <utility>
 #include "rlutil.h"
 
+static const int START_POS=-1;
+
+struct Placeholder {
+	int id;
+	int length;
+	std::map<std::string,std::string> config;
+	Placeholder():id(START_POS),length(START_POS){}
+};
+
+typedef std::vector< std::pair<int,Placeholder> > Placeholders;
+
 class FormatContext
 {
-	static const int START_POS=-1;
-	
-	struct Placeholder {
-		int id;
-		int length;
-		std::map<std::string,std::string> config;
-		Placeholder():id(START_POS),length(START_POS){}
-	};
-
-	typedef std::vector< std::pair<int,Placeholder> > TPlaceholders;
 	struct ParserState {
 		std::string format_string;
 		int pos;
@@ -26,7 +27,7 @@ class FormatContext
 		int last_value_start;
 		std::string last_key;
 		Placeholder current_placeholder;
-		TPlaceholders placeholders;
+		Placeholders placeholders;
 	} state;
 
 	static int string_to_key(std::string const& to_parse) {
