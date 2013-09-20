@@ -9,8 +9,6 @@
 #include "rlutil.h"
 #endif
 
-///BEGIN FORMAT CONTEXT///
-
 typedef std::map<std::string,std::string> TKeyValueMap;
 
 struct TConfig {
@@ -20,6 +18,8 @@ struct TConfig {
 	static const char equals='=';
 	static const size_t index_begin=1;
 };
+
+///BEGIN FORMAT CONTEXT///
 
 static const int START_POS=-1;
 
