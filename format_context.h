@@ -4,14 +4,27 @@
 #include <vector>
 #include <map>
 #include <utility>
+
+#ifdef DO_DEMO
 #include "rlutil.h"
+#endif
+
+typedef std::map<std::string,std::string> TKeyValueMap;
+
+struct TConfig {
+	static const char scope_begin='{';
+	static const char scope_end='}';
+	static const char separator=',';
+	static const char equals='=';
+	static const size_t index_begin=1;
+};
 
 static const int START_POS=-1;
 
 struct Placeholder {
 	int id;
 	int length;
-	std::map<std::string,std::string> config;
+	TKeyValueMap config;
 	Placeholder():id(START_POS),length(START_POS){}
 };
 
@@ -43,8 +56,10 @@ public:
 
 	bool IsAtEnd() const {
 		bool res=state.pos >= (static_cast<int>(state.format_string.size())-1);
+#ifdef DO_DEMO
 		if (res)
 			rlutil::setColor(rlutil::GREY);
+#endif
 		return res;
 	}
 
@@ -64,7 +79,9 @@ public:
 		state.format_string=_;
 		state.pos=START_POS;
 		ResetPlaceholderState();
+#if DO_DEMO
 		rlutil::setColor(rlutil::WHITE);
+#endif
 	}
 
 	void TryAddPlaceholder() {
@@ -82,7 +99,9 @@ public:
 		state.last_left_brace=state.pos;
 		state.last_key_start=state.last_value_start=START_POS;
 		state.last_key="";
+#if DO_DEMO
 		rlutil::setColor(rlutil::BLUE);
+#endif
 	}
 
 	void ParsePlaceholder() {
@@ -101,7 +120,9 @@ public:
 		state.last_key_start=state.pos;
 		state.last_value_start=START_POS;
 		state.last_key="";
+#if DO_DEMO
 		rlutil::setColor(rlutil::YELLOW);
+#endif
 	}
 
 	void AddKey() {
@@ -113,13 +134,17 @@ public:
 
 	void ContinueCollectingKeys() {
 		state.last_key_start=state.pos;
+#if DO_DEMO
 		rlutil::setColor(rlutil::WHITE);
+#endif
 	}
 
 	void StartAddingValue() {
 		state.last_key_start=START_POS;
 		state.last_value_start=state.pos;
+#if DO_DEMO
 		rlutil::setColor(rlutil::MAGENTA);
+#endif
 	}
 
 	void FinishCollectingPlaceholder() {
@@ -132,10 +157,13 @@ public:
 		}
 
 		ResetPlaceholderState();
+#if DO_DEMO
 		rlutil::setColor(rlutil::LIGHTBLUE);
+#endif
 	}
 
 	void Continue() {
+#if DO_DEMO
 		if (state.last_value_start>=0)
 			rlutil::setColor(rlutil::LIGHTRED);
 		else if (state.last_key_start>=0)
@@ -144,16 +172,17 @@ public:
 			rlutil::setColor(rlutil::GREEN);
 		else
 			rlutil::setColor(rlutil::WHITE);
+#endif
 	}
 
-	void FSMError(const char* a, const char* b) {
-		//std::cout<<a<<" "<<b<<std::endl;
+	void FSMError(const char*, const char*) {
 	}
 
 	Placeholders Get() {
 		return state.placeholders;
 	}
 
+#if DO_DEMO
 	~FormatContext() {
 		for (auto k: state.placeholders) {
 			std::cout<<k.first<<"-"<<k.first+k.second.length-1<<": "<<k.second.id<<" ";
@@ -166,4 +195,6 @@ public:
 			std::cout<<std::endl;
 		}
 	}
+#endif
+
 };
