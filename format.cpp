@@ -3,7 +3,7 @@
 // FSM:       Format
 // Context:   FormatContext
 // Version:   
-// Generated: Donnerstag 09/19/2013 at 22:32:09 MESZ
+// Generated: Freitag 09/20/2013 at 19:33:09 MESZ
 //
 
 
@@ -51,7 +51,8 @@ void FormatState::ReadComma(Format& s)
 void FormatReadingKeyState::ReadEqualsSign( Format& s )
 {
 
-    s.AddKeyAndStartAddingValue();
+    s.AddKey();
+    s.StartAddingValue();
 
     // Change the state
     s.SetState(Format::ReadingValue);
@@ -63,7 +64,8 @@ void FormatReadingKeyState::ReadEqualsSign( Format& s )
 void FormatReadingKeyState::ReadComma( Format& s )
 {
 
-    s.AddKeyAndContinue();
+    s.AddKey();
+    s.ContinueCollectingKeys();
 
     // Change the state
     s.SetState(Format::ReadingKey);
@@ -75,7 +77,7 @@ void FormatReadingKeyState::ReadComma( Format& s )
 void FormatReadingKeyState::ReadLeftBrace( Format& s )
 {
 
-    s.LeftBrace();
+    s.StartCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::ReadingPlaceholder);
@@ -87,7 +89,7 @@ void FormatReadingKeyState::ReadLeftBrace( Format& s )
 void FormatReadingKeyState::ReadRightBrace( Format& s )
 {
 
-    s.RightBrace();
+    s.FinishCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::General);
@@ -103,7 +105,7 @@ void FormatReadingKeyState::ReadRightBrace( Format& s )
 void FormatGeneralState::ReadLeftBrace( Format& s )
 {
 
-    s.LeftBrace();
+    s.StartCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::ReadingPlaceholder);
@@ -119,7 +121,7 @@ void FormatGeneralState::ReadLeftBrace( Format& s )
 void FormatReadingPlaceholderState::ReadLeftBrace( Format& s )
 {
 
-    s.LeftBrace();
+    s.StartCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::ReadingPlaceholder);
@@ -132,7 +134,7 @@ void FormatReadingPlaceholderState::ReadRightBrace( Format& s )
 {
 
     s.ParsePlaceholder();
-    s.RightBrace();
+    s.FinishCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::General);
@@ -162,7 +164,7 @@ void FormatReadingValueState::ReadRightBrace( Format& s )
 {
 
     s.AddValue();
-    s.RightBrace();
+    s.FinishCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::General);
@@ -174,7 +176,7 @@ void FormatReadingValueState::ReadRightBrace( Format& s )
 void FormatReadingValueState::ReadLeftBrace( Format& s )
 {
 
-    s.LeftBrace();
+    s.StartCollectingPlaceholder();
 
     // Change the state
     s.SetState(Format::ReadingPlaceholder);

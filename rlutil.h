@@ -236,7 +236,7 @@ const RLUTIL_STRING_T ANSI_WHITE = "\033[01;37m";
  * KEY_SPACE   - Space
  * KEY_INSERT  - Insert
  * KEY_HOME    - Home
- * KEY_END     - End
+ * KEY_END     - IsAtEnd
  * KEY_DELETE  - Delete
  * KEY_PGUP    - PageUp
  * KEY_PGDOWN  - PageDown
