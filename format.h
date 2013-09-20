@@ -1,11 +1,11 @@
-#ifndef FSM_Format_09_20_2013_19_33_09_H
-#define FSM_Format_09_20_2013_19_33_09_H
+#ifndef FSM_FormatParser_09_20_2013_20_00_04_H
+#define FSM_FormatParser_09_20_2013_20_00_04_H
 //----------------------------------------------
 // format.h
-// FSM:       Format
+// FSM:       FormatParser
 // Context:   FormatContext
 // Version:   
-// Generated: Freitag 09/20/2013 at 19:33:09 MESZ
+// Generated: Freitag 09/20/2013 at 20:00:04 MESZ
 //
 
 
@@ -15,81 +15,81 @@
 
 // Forward Declarations
 
-class Format;
+class FormatParser;
 
 //----------------------------------------------
-// FormatState: The base state class
+// FormatParserState: The base state class
 //----------------------------------------------
-class FormatState
+class FormatParserState
 {
   public: 
     virtual const char* StateName() const = 0;
-    virtual void ReadEqualsSign( Format& );
-    virtual void ReadRightBrace( Format& );
-    virtual void ReadLeftBrace( Format& );
-    virtual void ReadComma( Format& );
+    virtual void ReadEqualsSign( FormatParser& );
+    virtual void ReadRightBrace( FormatParser& );
+    virtual void ReadLeftBrace( FormatParser& );
+    virtual void ReadComma( FormatParser& );
 };
 
 //----------------------------------------------
 // State: ReadingKey
 //----------------------------------------------
-class FormatReadingKeyState : public FormatState
+class FormatParserReadingKeyState : public FormatParserState
 {
   public: 
     virtual const char* StateName() const
         { return "ReadingKey"; }
-    virtual void ReadEqualsSign( Format& );
-    virtual void ReadComma( Format& );
-    virtual void ReadLeftBrace( Format& );
-    virtual void ReadRightBrace( Format& );
+    virtual void ReadComma( FormatParser& );
+    virtual void ReadLeftBrace( FormatParser& );
+    virtual void ReadEqualsSign( FormatParser& );
+    virtual void ReadRightBrace( FormatParser& );
 };
 //----------------------------------------------
 // State: General
 //----------------------------------------------
-class FormatGeneralState : public FormatState
+class FormatParserGeneralState : public FormatParserState
 {
   public: 
     virtual const char* StateName() const
         { return "General"; }
-    virtual void ReadLeftBrace( Format& );
+    virtual void ReadLeftBrace( FormatParser& );
 };
 //----------------------------------------------
 // State: ReadingPlaceholder
 //----------------------------------------------
-class FormatReadingPlaceholderState : public FormatState
+class FormatParserReadingPlaceholderState : public FormatParserState
 {
   public: 
     virtual const char* StateName() const
         { return "ReadingPlaceholder"; }
-    virtual void ReadLeftBrace( Format& );
-    virtual void ReadRightBrace( Format& );
-    virtual void ReadComma( Format& );
+    virtual void ReadRightBrace( FormatParser& );
+    virtual void ReadComma( FormatParser& );
+    virtual void ReadLeftBrace( FormatParser& );
 };
 //----------------------------------------------
 // State: ReadingValue
 //----------------------------------------------
-class FormatReadingValueState : public FormatState
+class FormatParserReadingValueState : public FormatParserState
 {
   public: 
     virtual const char* StateName() const
         { return "ReadingValue"; }
-    virtual void ReadRightBrace( Format& );
-    virtual void ReadLeftBrace( Format& );
-    virtual void ReadComma( Format& );
+    virtual void ReadComma( FormatParser& );
+    virtual void ReadRightBrace( FormatParser& );
+    virtual void ReadLeftBrace( FormatParser& );
 };
 //----------------------------------------------
-// Format: The Finite State Machine class
+// FormatParser: The Finite State Machine class
 //----------------------------------------------
-class Format: public FormatContext
+class FormatParser: public FormatContext
 {
   public: 
     // Static State variables
-    static FormatReadingKeyState ReadingKey;
-    static FormatGeneralState General;
-    static FormatReadingPlaceholderState ReadingPlaceholder;
-    static FormatReadingValueState ReadingValue;
+    static FormatParserReadingKeyState ReadingKey;
+    static FormatParserGeneralState General;
+    static FormatParserReadingPlaceholderState ReadingPlaceholder;
+    static FormatParserReadingValueState ReadingValue;
 
-    Format(); // default Constructor
+    FormatParser(); // default Constructor
 
     // Event functions
     virtual void ReadEqualsSign() { itsState->ReadEqualsSign( *this ); }
@@ -98,14 +98,14 @@ class Format: public FormatContext
     virtual void ReadComma() { itsState->ReadComma( *this ); }
 
     // State Accessor functions
-    void SetState( FormatState& theState ) { itsState = &theState; }
-    FormatState& GetState() const { return *itsState; }
+    void SetState( FormatParserState& theState ) { itsState = &theState; }
+    FormatParserState& GetState() const { return *itsState; }
 
     const char* GetCurrentStateName() const { return itsState->StateName(); }
     const char* GetVersion() const;
 
   private: 
-    FormatState* itsState;
+    FormatParserState* itsState;
 };
 
-#endif /* FSM_Format_09_20_2013_19_33_09_H */
+#endif /* FSM_FormatParser_09_20_2013_20_00_04_H */

@@ -1,5 +1,5 @@
 Context FormatContext
-FSMName Format
+FSMName FormatParser
 Initial General
 
 pragma Header format_context.h
