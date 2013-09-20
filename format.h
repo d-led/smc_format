@@ -1,5 +1,3 @@
-///BEGIN FORMAT H///
-
 #ifndef FSM_FormatParser_09_20_2013_20_00_04_H
 #define FSM_FormatParser_09_20_2013_20_00_04_H
 //----------------------------------------------
@@ -14,6 +12,8 @@
 // Included header files
 
 #include "format_context.h"
+
+///BEGIN FORMAT H///
 
 // Forward Declarations
 
@@ -110,6 +110,6 @@ class FormatParser: public FormatContext
     FormatParserState* itsState;
 };
 
-#endif /* FSM_FormatParser_09_20_2013_20_00_04_H */
-
 ///END FORMAT H///
+
+#endif /* FSM_FormatParser_09_20_2013_20_00_04_H */
