@@ -150,6 +150,10 @@ public:
 		//std::cout<<a<<" "<<b<<std::endl;
 	}
 
+	Placeholders Get() {
+		return state.placeholders;
+	}
+
 	~FormatContext() {
 		for (auto k: state.placeholders) {
 			std::cout<<k.first<<"-"<<k.first+k.second.length-1<<": "<<k.second.id<<" ";
