@@ -2,7 +2,7 @@
 
 int main() {
 	FormatParser f;
-	f.SetString("bla {1 } {2}{}{3,bla,blup}{4,k=akj,nl,jsl=22}{{5}} }}{{");	
+	f.SetString("bla {1} {2}{}{3,bla,blup}{4,k=akj,nl,jsl=22}{{5}} }}{{");	
 
 	while (!f.IsAtEnd()) {
 		char c=f.Step();

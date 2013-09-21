@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include <sstream>
 
 #ifdef DO_DEMO
 #include "rlutil.h"
@@ -45,13 +46,14 @@ class FormatContext
 		Placeholders placeholders;
 	} state;
 
-	static int string_to_key(std::string const& to_parse) {
+	int string_to_key(std::string const& to_parse) {
 		int res=START_POS;
-		//c++11
-		try {
-			res=std::stoi(to_parse);
-		} catch (std::exception&) {}
-		return res;
+		std::istringstream ss(to_parse);
+		ss.imbue(std::locale::classic());
+		ss >> res;
+		if (!ss.fail() && ss.eof())
+			return res;
+		return START_POS;
 	}
 
 public:
