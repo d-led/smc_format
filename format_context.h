@@ -18,6 +18,15 @@ struct TConfig {
 	static const char separator=',';
 	static const char equals='=';
 	static const size_t index_begin=1;
+	static int string_to_key(std::string const& to_parse) {
+		int res=-1;
+		std::istringstream ss(to_parse);
+		ss.imbue(std::locale::classic());
+		ss >> res;
+		if (!ss.fail() && ss.eof())
+			return res;
+		return -1;
+	}
 };
 
 ///BEGIN FORMAT CONTEXT///
@@ -45,16 +54,6 @@ class FormatContext
 		Placeholder current_placeholder;
 		Placeholders placeholders;
 	} state;
-
-	int string_to_key(std::string const& to_parse) {
-		int res=START_POS;
-		std::istringstream ss(to_parse);
-		ss.imbue(std::locale::classic());
-		ss >> res;
-		if (!ss.fail() && ss.eof())
-			return res;
-		return START_POS;
-	}
 
 public:
 
@@ -109,7 +108,7 @@ public:
 	}
 
 	void ParsePlaceholder() {
-		int id=string_to_key(std::string(state.format_string.begin()+state.last_left_brace+1,state.format_string.begin()+state.pos));
+		int id=TConfig::string_to_key(std::string(state.format_string.begin()+state.last_left_brace+1,state.format_string.begin()+state.pos));
 		state.current_placeholder.id=id;
 	}
 
