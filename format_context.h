@@ -83,7 +83,7 @@ public:
 		state.format_string=_;
 		state.pos=START_POS;
 		ResetPlaceholderState();
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::WHITE);
 #endif
 	}
@@ -103,7 +103,7 @@ public:
 		state.last_left_brace=state.pos;
 		state.last_key_start=state.last_value_start=START_POS;
 		state.last_key="";
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::BLUE);
 #endif
 	}
@@ -124,7 +124,7 @@ public:
 		state.last_key_start=state.pos;
 		state.last_value_start=START_POS;
 		state.last_key="";
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::YELLOW);
 #endif
 	}
@@ -138,7 +138,7 @@ public:
 
 	void ContinueCollectingKeys() {
 		state.last_key_start=state.pos;
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::WHITE);
 #endif
 	}
@@ -146,7 +146,7 @@ public:
 	void StartAddingValue() {
 		state.last_key_start=START_POS;
 		state.last_value_start=state.pos;
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::MAGENTA);
 #endif
 	}
@@ -161,13 +161,13 @@ public:
 		}
 
 		ResetPlaceholderState();
-#if DO_DEMO
+#ifdef DO_DEMO
 		rlutil::setColor(rlutil::LIGHTBLUE);
 #endif
 	}
 
 	void Continue() {
-#if DO_DEMO
+#ifdef DO_DEMO
 		if (state.last_value_start>=0)
 			rlutil::setColor(rlutil::LIGHTRED);
 		else if (state.last_key_start>=0)
@@ -186,7 +186,7 @@ public:
 		return state.placeholders;
 	}
 
-#if DO_DEMO
+#ifdef DO_DEMO
 	~FormatContext() {
 		for (auto k: state.placeholders) {
 			std::cout<<k.first<<"-"<<k.first+k.second.length-1<<": "<<k.second.id<<" ";
