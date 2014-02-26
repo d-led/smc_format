@@ -3,7 +3,7 @@ smc format
 
 This is preliminary work for a rewrite of the [fakeformat](https://github.com/d-led/fakeformat) single-header C++ pragmatic string formatting library.
 
-A blog post to follow...
+See [a blog post about it](http://ledentsov.de/2013/09/21/fakeformat-ci/)
 
 state machine
 -------------
@@ -14,7 +14,7 @@ Get it from the links to regenerate the state machine
 
 For demonstration purposes the [rlutil](https://github.com/tapio/rlutil) header is included.
 
-TODO
-----
+current state
+-------------
 
 This is raw dirty code. It should be cleaned for use in fakeformat.
